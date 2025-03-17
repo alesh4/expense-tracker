@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+--color-cgray-100: hsl(0, 0%, 10%);
+--color-cgray-200: hsl(0, 0%, 25%);
+--color-cgray-300: hsl(0, 0%, 46%);
+--color-cgray-400: hsl(0, 0%, 83%);
+--color-cgray-500: hsl(0, 0%, 96%);
+}
+
+/*allows to style upload button
+* credit: Szogyenyi Zoltan from: https://medium.com/themesberg-blog/how-to-build-a-tailwind-css-file-upload-input-component-dd02e72a1293
+*/
+#file-upload::-webkit-file-upload-button, #file-upload::file-selector-button {
+    @apply text-white bg-gray-700 hover:bg-gray-600 font-medium text-sm cursor-pointer border-0 py-2.5 pl-8 pr-4;
+      margin-inline-start: -1rem;
+      margin-inline-end: 1rem;
+  }
