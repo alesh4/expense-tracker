@@ -41,7 +41,7 @@ function App() {
   const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
   
   /*headers: Transaction Date, Post Date, Description, Category, Type, Amount, Memo*/
-  const [csvData, setCsvData] = useState(0);
+  const [csvData, setCsvData] = useState([]);
 
   useEffect(() => {
     const local_data = localStorage.getItem('local-expense-data');
@@ -54,35 +54,56 @@ function App() {
   const handleAddNewClick = (event) =>{
     setDisplayAddNew(true);
   }
+
+  const handleChildSaved = (data) =>{
+    data = data ?? null;
+    console.log(data);
+    if(data){
+      setCsvData([...csvData, data]);
+      localStorage.setItem('local-expense-data',JSON.stringify(csvData));
+    }
+  }
+
+  
+
   console.log(csvData);
 
   return (
     <>
     {/* beware. using relative here to allow absolute for our button */}
     <div style={{height:"600px", width:"360px"}} className='relative mx-auto text-gray-700 bg-gray-200 p-8 text-xl'>
-      <div className='h-full'>
+      
       { displayAddNew &&  
-      <AddNewItem setDisplayAddNew={setDisplayAddNew}/>
-      }
-      </div>
       <div className='h-full'>
+      
+      {/* this component works but needs more work <AddNewItem setDisplayAddNew={setDisplayAddNew} handleChildSaved={handleChildSaved}/> */}
+      
+      </div>
+      }
+      
+      {/* had a div of h-full here */}
       { !displayAddNew && 
-        <div className='w-full absolute bottom-0 right-0 items-center justify-center flex'>
+        <div className='h-full w-full items-center justify-between flex flex-col'>
+          
+            { csvData.map((item,index) => {
+              return(
+              <div className='text-2xl'>
+              <h3 key={index} className='w-full'>{item.Category}</h3>
+              </div>)
+            })}
+          
           <div className='mx-auto text-4xl text-white bg-gray-700 hover:bg-gray-600 font-medium cursor-pointer border-0 py-2.5 px-8'><button onClick={handleAddNewClick}>+</button>
           </div>
         </div>
+        
       }
-      </div>  
+      
     </div>
     
     <PWABadge />
     </>
     
   )
-}
-
-function makeworkout(name,time,sets,reps){
-  return {"workout name":name,"time":time,"sets":sets,"reps":reps}
 }
 
 export default App
