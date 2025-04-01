@@ -1,5 +1,5 @@
 import React from "react";
-
+import Papa from "papaparse";
 function AddNewItem(props){
 
     const fileHandler = (event) => {
@@ -9,14 +9,15 @@ function AddNewItem(props){
           header: true,
           complete: (results) => {
             console.log(results.data)
-            setCsvData(results.data);
+            //setCsvData(results.data);
             localStorage.setItem('local-expense-data',JSON.stringify(results.data));
           },
           error: (error) => {
             console.error("Error parsing CSV:", error.message);
           }
         });
-      }
+        props.setDisplayAddNew(false);
+    }
 
     const handleSubmit = (formdata) =>{
         /* TODO: write test to check for date submit */
